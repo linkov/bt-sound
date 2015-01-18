@@ -13,5 +13,6 @@
 @property (strong) NSString *deviceName;
 @property (strong) NSString *songInfo;
 @property (strong) NSNumber *songID;
+@property (strong) NSNumber *songElapsedTime;
 
 @end

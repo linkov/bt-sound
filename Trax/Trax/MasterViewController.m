@@ -8,10 +8,11 @@
 #import "SDWBTManager.h"
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "SDWDeviceInfo.h"
 
-@interface MasterViewController ()
+@interface MasterViewController () <SDWBTManagerDelegate>
 
-@property NSMutableArray *objects;
+@property NSArray *objects;
 @property SDWBTManager *btManager;
 @end
 
@@ -30,6 +31,11 @@
     self.navigationItem.rightBarButtonItem = addButton;
 
      self.btManager = [SDWBTManager new];
+    self.btManager.delegate = self;
+
+    if (!self.objects) {
+        self.objects = [[NSMutableArray alloc] init];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -43,12 +49,10 @@
 }
 
 - (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
-    }
-    [self.objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+//    [self.objects insertObject:[NSDate date] atIndex:0];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - Segues
@@ -74,23 +78,39 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    SDWDeviceInfo *object = self.objects[indexPath.row];
+    cell.textLabel.text = object.songInfo;
+    cell.detailTextLabel.text = object.deviceName;
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    SDWDeviceInfo *object = self.objects[indexPath.row];
+    [self.btManager syncCurrentTrackWithDeviceInfo:object];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    // Return NO if you do not want the specified item to be editable.
+//    return YES;
+//}
+
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [self.objects removeObjectAtIndex:indexPath.row];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+//    }
+//}
+
+
+
+#pragma mark - SDWBTManagerDelegate
+
+- (void)managerDidPopulateData:(NSArray *)data {
+
+    self.objects = data;
+    [self.tableView reloadData];
 }
 
 @end

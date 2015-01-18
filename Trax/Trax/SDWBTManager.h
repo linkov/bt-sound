@@ -7,14 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SDWDeviceInfo.h"
+
+@protocol SDWBTManagerDelegate
+
+@optional
+
+- (void)managerDidPopulateData:(NSArray *)data;
+
+
+@end
+
+
+
 
 typedef void (^SDWBTManagerCompletionBlock)(id object, NSError *error);
 
 
 @interface SDWBTManager : NSObject
 
+@property (weak) id<SDWBTManagerDelegate> delegate;
 
-- (void)fetchNearbyDeviceDataWithCompletion:(SDWBTManagerCompletionBlock)block;
+- (void)syncCurrentTrackWithDeviceInfo:(SDWDeviceInfo *)deviceInfo;
 - (void)updateTrackToCurrent;
 
 

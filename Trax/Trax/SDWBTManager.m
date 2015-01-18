@@ -9,13 +9,14 @@
 @import MediaPlayer;
 @import CoreLocation;
 
-#import "SDWDeviceInfo.h"
+
 #import "SDWBTManager.h"
 
 NSString * const SongInfoServiceID = @"7E57";
 NSString * const SongIDCharacteristicID = @"7E56";
 NSString * const SongInfoCharacteristicID = @"7E55";
 NSString * const PhoneNameCharacteristicID = @"7E53";
+NSString * const SongElapsedTimeCharacteristicID = @"7E52";
 
 NSString * const ServiceID = @"3718314F-2B74-4809-9EF9-F1D083C98E7E"; // proximityUUID, will be returned from server, same for all users
 NSString * const beaconId = @"com.sdwr.found.beaconid";
@@ -43,6 +44,8 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 @property (strong) CBMutableService *mainInfoService; // song info & profile info
 @property (strong) CBMutableCharacteristic *songInfoCharacteristic;
 @property (strong) CBMutableCharacteristic *songIDCharacteristic;
+@property (strong) CBMutableCharacteristic *songElapsedTimeCharacteristic;
+
 @property (strong) CBMutableCharacteristic *phoneInfoCharacteristic;
 
 @end
@@ -119,6 +122,7 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
         [self sendValue:[self currentTrack] forCharacteristic:self.songInfoCharacteristic];
         [self sendValue:[self currentTrackID] forCharacteristic:self.songIDCharacteristic];
         [self sendValue:[self phoneName] forCharacteristic:self.phoneInfoCharacteristic];
+        [self sendValue:[self elapsedTime] forCharacteristic:self.songElapsedTimeCharacteristic];
     }
 }
 
@@ -126,6 +130,10 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
 - (void)setupServices {
 
+    self.songElapsedTimeCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:SongElapsedTimeCharacteristicID]
+                                                                      properties:CBCharacteristicPropertyNotify
+                                                                           value:nil
+                                                                     permissions:CBAttributePermissionsReadable];
 
     self.phoneInfoCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:PhoneNameCharacteristicID]
                                                                       properties:CBCharacteristicPropertyNotify
@@ -146,7 +154,7 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
     self.mainInfoService = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:SongInfoServiceID]
                                                           primary:YES];
 
-    self.mainInfoService.characteristics = @[self.songInfoCharacteristic,self.phoneInfoCharacteristic,self.songIDCharacteristic];
+    self.mainInfoService.characteristics = @[self.songInfoCharacteristic,self.phoneInfoCharacteristic,self.songIDCharacteristic,self.songElapsedTimeCharacteristic];
 
     [self.peripheralManager addService:self.mainInfoService];
     
@@ -154,12 +162,14 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
 #pragma mark - API
 
-- (void)fetchNearbyDeviceDataWithCompletion:(SDWBTManagerCompletionBlock)block {
-
-}
-
 - (void)updateTrackToCurrent {
     [self trackChange:nil];
+}
+
+- (void)syncCurrentTrackWithDeviceInfo:(SDWDeviceInfo *)deviceInfo {
+
+    [self playItemWithID:deviceInfo.songID beginFrom:deviceInfo.songElapsedTime];
+
 }
 
 
@@ -265,7 +275,8 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
         [self.discoveredDevice discoverCharacteristics:@[
                                                          [CBUUID UUIDWithString:SongInfoCharacteristicID],
                                                          [CBUUID UUIDWithString:PhoneNameCharacteristicID],
-                                                         [CBUUID UUIDWithString:SongIDCharacteristicID]
+                                                         [CBUUID UUIDWithString:SongIDCharacteristicID],
+                                                         [CBUUID UUIDWithString:SongElapsedTimeCharacteristicID]
                                                          ]
                                             forService:service];
 
@@ -363,6 +374,11 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
                     info.songID = [NSNumber numberWithLongLong:[sID longLongValue]];
                 }
 
+                if ([ch.UUID.UUIDString isEqualToString:SongElapsedTimeCharacteristicID]) {
+                    NSString *sID = [[NSString alloc] initWithData:ch.value encoding:NSUTF8StringEncoding];
+                    info.songElapsedTime = [NSNumber numberWithLongLong:[sID longLongValue]];
+                }
+
                 if ([ch.UUID.UUIDString isEqualToString:PhoneNameCharacteristicID]) {
                     NSString *sID = [[NSString alloc] initWithData:ch.value encoding:NSUTF8StringEncoding];
                     info.deviceName = sID;
@@ -384,8 +400,11 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
         NSLog(@"trackID - %@",info.songID);
         NSLog(@"trackName - %@",info.songInfo);
+        NSLog(@"trackElapsed - %f",[info.songInfo doubleValue]);
         NSLog(@"deviceName - %@",info.deviceName);
     }
+
+    [self.delegate managerDidPopulateData:deviceInfoObjects];
 
 }
 - (void)sendValue:(id)value forCharacteristic:(CBMutableCharacteristic *)cr {
@@ -398,7 +417,7 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
     return [[UIDevice currentDevice] name];
 }
 
-- (void)playItemWithID:(NSNumber *)itemID {
+- (void)playItemWithID:(NSNumber *)itemID beginFrom:(NSNumber *)elapsedTime {
 
     //MPNowPlayingInfoPropertyElapsedPlaybackTime and MPMediaItemPropertyPlaybackDuration.
 
@@ -422,6 +441,19 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 //
 //    [iPodMusicPlayerController prepareToPlay];
 //    [iPodMusicPlayerController play];
+}
+
+- (NSString *)elapsedTime {
+
+    MPMusicPlayerController *iPodMusicPlayerController = [MPMusicPlayerController systemMusicPlayer];
+
+    double nowPlayingItemDuration = [[[iPodMusicPlayerController nowPlayingItem] valueForProperty:MPMediaItemPropertyPlaybackDuration]doubleValue];
+    double currentTime = (double) [iPodMusicPlayerController currentPlaybackTime];
+    double remainingTime = nowPlayingItemDuration - currentTime;
+
+
+    NSNumber *tID = [NSNumber numberWithDouble:remainingTime];
+    return [tID stringValue];
 }
 
 - (NSString *)currentTrackID {
