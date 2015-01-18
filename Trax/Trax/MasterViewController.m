@@ -5,15 +5,15 @@
 //  Created by alex on 1/17/15.
 //  Copyright (c) 2015 SDWR. All rights reserved.
 //
-#import "SDWBTManager.h"
+#import "SDWMusicBTManager.h"
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "SDWDeviceInfo.h"
 
-@interface MasterViewController () <SDWBTManagerDelegate>
+@interface MasterViewController () <SDWMusicBTManagerDelegate>
 
 @property NSArray *objects;
-@property SDWBTManager *btManager;
+@property SDWMusicBTManager *btManager;
 @end
 
 @implementation MasterViewController
@@ -27,10 +27,12 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
+    self.title = @"Traxx";
+
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
 
-     self.btManager = [SDWBTManager new];
+     self.btManager = [SDWMusicBTManager new];
     self.btManager.delegate = self;
 
     if (!self.objects) {
@@ -58,11 +60,11 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
-    }
+//    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+//        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        NSDate *object = self.objects[indexPath.row];
+//        [[segue destinationViewController] setDetailItem:object];
+//    }
 }
 
 #pragma mark - Table View

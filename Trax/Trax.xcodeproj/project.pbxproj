@@ -14,20 +14,19 @@
 		F1ECEF851A6AED5100AF7DA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEF831A6AED5100AF7DA2 /* Main.storyboard */; };
 		F1ECEF871A6AED5100AF7DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEF861A6AED5100AF7DA2 /* Images.xcassets */; };
 		F1ECEF8A1A6AED5100AF7DA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEF881A6AED5100AF7DA2 /* LaunchScreen.xib */; };
-		F1ECEF961A6AED5100AF7DA2 /* TraxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEF951A6AED5100AF7DA2 /* TraxTests.m */; };
-		F1ECEFA11A6AED9700AF7DA2 /* SDWBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFA01A6AED9700AF7DA2 /* SDWBTManager.m */; };
 		F1ECEFA41A6BC46000AF7DA2 /* SDWDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFA31A6BC46000AF7DA2 /* SDWDeviceInfo.m */; };
+		F1ECEFA71A6C31B700AF7DA2 /* SDWMusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFA61A6C31B700AF7DA2 /* SDWMusicManager.m */; };
+		F1ECEFAA1A6C341600AF7DA2 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFA91A6C341600AF7DA2 /* Utils.m */; };
+		F1ECEFB51A6C351B00AF7DA2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFB41A6C351B00AF7DA2 /* AppDelegate.m */; };
+		F1ECEFB71A6C351B00AF7DA2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFB61A6C351B00AF7DA2 /* main.m */; };
+		F1ECEFBA1A6C351B00AF7DA2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFB91A6C351B00AF7DA2 /* ViewController.m */; };
+		F1ECEFBC1A6C351B00AF7DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEFBB1A6C351B00AF7DA2 /* Images.xcassets */; };
+		F1ECEFBF1A6C351B00AF7DA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEFBD1A6C351B00AF7DA2 /* Main.storyboard */; };
+		F1ECEFD51A6C358B00AF7DA2 /* SDWBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */; };
+		F1ECEFD61A6C358B00AF7DA2 /* SDWBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */; };
+		F1ECEFD91A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */; };
+		F1ECEFDA1A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		F1ECEF901A6AED5100AF7DA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1ECEF6B1A6AED5100AF7DA2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F1ECEF721A6AED5100AF7DA2;
-			remoteInfo = Trax;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		F1ECEF731A6AED5100AF7DA2 /* Trax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trax.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,13 +41,25 @@
 		F1ECEF841A6AED5100AF7DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F1ECEF861A6AED5100AF7DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F1ECEF891A6AED5100AF7DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F1ECEF8F1A6AED5100AF7DA2 /* TraxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TraxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F1ECEF941A6AED5100AF7DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F1ECEF951A6AED5100AF7DA2 /* TraxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TraxTests.m; sourceTree = "<group>"; };
-		F1ECEF9F1A6AED9700AF7DA2 /* SDWBTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWBTManager.h; sourceTree = "<group>"; };
-		F1ECEFA01A6AED9700AF7DA2 /* SDWBTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWBTManager.m; sourceTree = "<group>"; };
 		F1ECEFA21A6BC46000AF7DA2 /* SDWDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWDeviceInfo.h; sourceTree = "<group>"; };
 		F1ECEFA31A6BC46000AF7DA2 /* SDWDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWDeviceInfo.m; sourceTree = "<group>"; };
+		F1ECEFA51A6C31B700AF7DA2 /* SDWMusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWMusicManager.h; sourceTree = "<group>"; };
+		F1ECEFA61A6C31B700AF7DA2 /* SDWMusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWMusicManager.m; sourceTree = "<group>"; };
+		F1ECEFA81A6C341600AF7DA2 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		F1ECEFA91A6C341600AF7DA2 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		F1ECEFAF1A6C351B00AF7DA2 /* TraxMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TraxMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1ECEFB21A6C351B00AF7DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1ECEFB31A6C351B00AF7DA2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F1ECEFB41A6C351B00AF7DA2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F1ECEFB61A6C351B00AF7DA2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F1ECEFB81A6C351B00AF7DA2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F1ECEFB91A6C351B00AF7DA2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F1ECEFBB1A6C351B00AF7DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F1ECEFBE1A6C351B00AF7DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F1ECEFD31A6C358B00AF7DA2 /* SDWBTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWBTManager.h; sourceTree = "<group>"; };
+		F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWBTManager.m; sourceTree = "<group>"; };
+		F1ECEFD71A6C383000AF7DA2 /* SDWMusicBTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWMusicBTManager.h; sourceTree = "<group>"; };
+		F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWMusicBTManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +70,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F1ECEF8C1A6AED5100AF7DA2 /* Frameworks */ = {
+		F1ECEFAC1A6C351B00AF7DA2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,8 +83,9 @@
 		F1ECEF6A1A6AED5100AF7DA2 = {
 			isa = PBXGroup;
 			children = (
+				F1ECEFD21A6C358B00AF7DA2 /* CrossPlatform */,
 				F1ECEF751A6AED5100AF7DA2 /* Trax */,
-				F1ECEF921A6AED5100AF7DA2 /* TraxTests */,
+				F1ECEFB01A6C351B00AF7DA2 /* TraxMac */,
 				F1ECEF741A6AED5100AF7DA2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				F1ECEF731A6AED5100AF7DA2 /* Trax.app */,
-				F1ECEF8F1A6AED5100AF7DA2 /* TraxTests.xctest */,
+				F1ECEFAF1A6C351B00AF7DA2 /* TraxMac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,8 +108,10 @@
 				F1ECEF7E1A6AED5100AF7DA2 /* MasterViewController.m */,
 				F1ECEF801A6AED5100AF7DA2 /* DetailViewController.h */,
 				F1ECEF811A6AED5100AF7DA2 /* DetailViewController.m */,
-				F1ECEF9F1A6AED9700AF7DA2 /* SDWBTManager.h */,
-				F1ECEFA01A6AED9700AF7DA2 /* SDWBTManager.m */,
+				F1ECEFA51A6C31B700AF7DA2 /* SDWMusicManager.h */,
+				F1ECEFA61A6C31B700AF7DA2 /* SDWMusicManager.m */,
+				F1ECEFA81A6C341600AF7DA2 /* Utils.h */,
+				F1ECEFA91A6C341600AF7DA2 /* Utils.m */,
 				F1ECEFA21A6BC46000AF7DA2 /* SDWDeviceInfo.h */,
 				F1ECEFA31A6BC46000AF7DA2 /* SDWDeviceInfo.m */,
 				F1ECEF831A6AED5100AF7DA2 /* Main.storyboard */,
@@ -117,21 +131,38 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F1ECEF921A6AED5100AF7DA2 /* TraxTests */ = {
+		F1ECEFB01A6C351B00AF7DA2 /* TraxMac */ = {
 			isa = PBXGroup;
 			children = (
-				F1ECEF951A6AED5100AF7DA2 /* TraxTests.m */,
-				F1ECEF931A6AED5100AF7DA2 /* Supporting Files */,
+				F1ECEFB31A6C351B00AF7DA2 /* AppDelegate.h */,
+				F1ECEFB41A6C351B00AF7DA2 /* AppDelegate.m */,
+				F1ECEFB81A6C351B00AF7DA2 /* ViewController.h */,
+				F1ECEFB91A6C351B00AF7DA2 /* ViewController.m */,
+				F1ECEFBB1A6C351B00AF7DA2 /* Images.xcassets */,
+				F1ECEFBD1A6C351B00AF7DA2 /* Main.storyboard */,
+				F1ECEFB11A6C351B00AF7DA2 /* Supporting Files */,
 			);
-			path = TraxTests;
+			path = TraxMac;
 			sourceTree = "<group>";
 		};
-		F1ECEF931A6AED5100AF7DA2 /* Supporting Files */ = {
+		F1ECEFB11A6C351B00AF7DA2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F1ECEF941A6AED5100AF7DA2 /* Info.plist */,
+				F1ECEFB21A6C351B00AF7DA2 /* Info.plist */,
+				F1ECEFB61A6C351B00AF7DA2 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F1ECEFD21A6C358B00AF7DA2 /* CrossPlatform */ = {
+			isa = PBXGroup;
+			children = (
+				F1ECEFD31A6C358B00AF7DA2 /* SDWBTManager.h */,
+				F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */,
+				F1ECEFD71A6C383000AF7DA2 /* SDWMusicBTManager.h */,
+				F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */,
+			);
+			path = CrossPlatform;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,23 +185,22 @@
 			productReference = F1ECEF731A6AED5100AF7DA2 /* Trax.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F1ECEF8E1A6AED5100AF7DA2 /* TraxTests */ = {
+		F1ECEFAE1A6C351B00AF7DA2 /* TraxMac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F1ECEF9C1A6AED5100AF7DA2 /* Build configuration list for PBXNativeTarget "TraxTests" */;
+			buildConfigurationList = F1ECEFCC1A6C351B00AF7DA2 /* Build configuration list for PBXNativeTarget "TraxMac" */;
 			buildPhases = (
-				F1ECEF8B1A6AED5100AF7DA2 /* Sources */,
-				F1ECEF8C1A6AED5100AF7DA2 /* Frameworks */,
-				F1ECEF8D1A6AED5100AF7DA2 /* Resources */,
+				F1ECEFAB1A6C351B00AF7DA2 /* Sources */,
+				F1ECEFAC1A6C351B00AF7DA2 /* Frameworks */,
+				F1ECEFAD1A6C351B00AF7DA2 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F1ECEF911A6AED5100AF7DA2 /* PBXTargetDependency */,
 			);
-			name = TraxTests;
-			productName = TraxTests;
-			productReference = F1ECEF8F1A6AED5100AF7DA2 /* TraxTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			name = TraxMac;
+			productName = TraxMac;
+			productReference = F1ECEFAF1A6C351B00AF7DA2 /* TraxMac.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -185,9 +215,8 @@
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 43R88X5B35;
 					};
-					F1ECEF8E1A6AED5100AF7DA2 = {
+					F1ECEFAE1A6C351B00AF7DA2 = {
 						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = F1ECEF721A6AED5100AF7DA2;
 					};
 				};
 			};
@@ -205,7 +234,7 @@
 			projectRoot = "";
 			targets = (
 				F1ECEF721A6AED5100AF7DA2 /* Trax */,
-				F1ECEF8E1A6AED5100AF7DA2 /* TraxTests */,
+				F1ECEFAE1A6C351B00AF7DA2 /* TraxMac */,
 			);
 		};
 /* End PBXProject section */
@@ -221,10 +250,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F1ECEF8D1A6AED5100AF7DA2 /* Resources */ = {
+		F1ECEFAD1A6C351B00AF7DA2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1ECEFBC1A6C351B00AF7DA2 /* Images.xcassets in Resources */,
+				F1ECEFBF1A6C351B00AF7DA2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,32 +266,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1ECEFD51A6C358B00AF7DA2 /* SDWBTManager.m in Sources */,
 				F1ECEF7C1A6AED5100AF7DA2 /* AppDelegate.m in Sources */,
 				F1ECEF7F1A6AED5100AF7DA2 /* MasterViewController.m in Sources */,
 				F1ECEFA41A6BC46000AF7DA2 /* SDWDeviceInfo.m in Sources */,
+				F1ECEFAA1A6C341600AF7DA2 /* Utils.m in Sources */,
 				F1ECEF791A6AED5100AF7DA2 /* main.m in Sources */,
-				F1ECEFA11A6AED9700AF7DA2 /* SDWBTManager.m in Sources */,
 				F1ECEF821A6AED5100AF7DA2 /* DetailViewController.m in Sources */,
+				F1ECEFA71A6C31B700AF7DA2 /* SDWMusicManager.m in Sources */,
+				F1ECEFD91A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F1ECEF8B1A6AED5100AF7DA2 /* Sources */ = {
+		F1ECEFAB1A6C351B00AF7DA2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1ECEF961A6AED5100AF7DA2 /* TraxTests.m in Sources */,
+				F1ECEFDA1A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */,
+				F1ECEFD61A6C358B00AF7DA2 /* SDWBTManager.m in Sources */,
+				F1ECEFBA1A6C351B00AF7DA2 /* ViewController.m in Sources */,
+				F1ECEFB71A6C351B00AF7DA2 /* main.m in Sources */,
+				F1ECEFB51A6C351B00AF7DA2 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F1ECEF911A6AED5100AF7DA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F1ECEF721A6AED5100AF7DA2 /* Trax */;
-			targetProxy = F1ECEF901A6AED5100AF7DA2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		F1ECEF831A6AED5100AF7DA2 /* Main.storyboard */ = {
@@ -277,6 +307,14 @@
 				F1ECEF891A6AED5100AF7DA2 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		F1ECEFBD1A6C351B00AF7DA2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1ECEFBE1A6C351B00AF7DA2 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -382,37 +420,36 @@
 			};
 			name = Release;
 		};
-		F1ECEF9D1A6AED5100AF7DA2 /* Debug */ = {
+		F1ECEFCD1A6C351B00AF7DA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TraxTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				INFOPLIST_FILE = TraxMac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trax.app/Trax";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		F1ECEF9E1A6AED5100AF7DA2 /* Release */ = {
+		F1ECEFCE1A6C351B00AF7DA2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = TraxTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				INFOPLIST_FILE = TraxMac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trax.app/Trax";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -436,11 +473,11 @@
 			);
 			defaultConfigurationIsVisible = 0;
 		};
-		F1ECEF9C1A6AED5100AF7DA2 /* Build configuration list for PBXNativeTarget "TraxTests" */ = {
+		F1ECEFCC1A6C351B00AF7DA2 /* Build configuration list for PBXNativeTarget "TraxMac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F1ECEF9D1A6AED5100AF7DA2 /* Debug */,
-				F1ECEF9E1A6AED5100AF7DA2 /* Release */,
+				F1ECEFCD1A6C351B00AF7DA2 /* Debug */,
+				F1ECEFCE1A6C351B00AF7DA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
