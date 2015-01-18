@@ -5,13 +5,14 @@
 //  Created by alex on 1/17/15.
 //  Copyright (c) 2015 SDWR. All rights reserved.
 //
-
+#import "SDWBTManager.h"
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 
 @interface MasterViewController ()
 
 @property NSMutableArray *objects;
+@property SDWBTManager *btManager;
 @end
 
 @implementation MasterViewController
@@ -27,6 +28,13 @@
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
+
+     self.btManager = [SDWBTManager new];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.btManager updateTrackToCurrent];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -15,5 +15,7 @@ typedef void (^SDWBTManagerCompletionBlock)(id object, NSError *error);
 
 
 - (void)fetchNearbyDeviceDataWithCompletion:(SDWBTManagerCompletionBlock)block;
+- (void)updateTrackToCurrent;
+
 
 @end

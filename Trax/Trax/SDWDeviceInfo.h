@@ -12,5 +12,6 @@
 
 @property (strong) NSString *deviceName;
 @property (strong) NSString *songInfo;
+@property (strong) NSNumber *songID;
 
 @end

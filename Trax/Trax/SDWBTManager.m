@@ -9,11 +9,14 @@
 @import MediaPlayer;
 @import CoreLocation;
 
+#import "SDWDeviceInfo.h"
 #import "SDWBTManager.h"
 
-NSString * const SongInfoServiceID = @"7e57";
-NSString * const SongInfoCharacteristicID = @"7e55";
-NSString * const PhoneNameCharacteristicID = @"7e53";
+NSString * const SongInfoServiceID = @"7E57";
+NSString * const SongIDCharacteristicID = @"7E56";
+NSString * const SongInfoCharacteristicID = @"7E55";
+NSString * const PhoneNameCharacteristicID = @"7E53";
+
 NSString * const ServiceID = @"3718314F-2B74-4809-9EF9-F1D083C98E7E"; // proximityUUID, will be returned from server, same for all users
 NSString * const beaconId = @"com.sdwr.found.beaconid";
 
@@ -39,6 +42,7 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 // music
 @property (strong) CBMutableService *mainInfoService; // song info & profile info
 @property (strong) CBMutableCharacteristic *songInfoCharacteristic;
+@property (strong) CBMutableCharacteristic *songIDCharacteristic;
 @property (strong) CBMutableCharacteristic *phoneInfoCharacteristic;
 
 @end
@@ -58,6 +62,8 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 #pragma mark - Setup
 
 - (void)setup {
+
+    self.discoveredDevices = [NSMutableSet set];
 
     [[MPMusicPlayerController systemMusicPlayer] beginGeneratingPlaybackNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackChange:) name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:nil];
@@ -84,7 +90,7 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
     [self.beaconRegion setNotifyOnExit:YES];
 
     [self configureAsTransmitter];
-    [self configureAsReceiver];
+   // [self configureAsReceiver];
 }
 
 - (void)configureAsTransmitter {
@@ -108,27 +114,12 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 #pragma mark - Music
 
 - (void)trackChange:(NSNotification *)note {
-    MPMusicPlayerController *iPodMusicPlayerController = [MPMusicPlayerController systemMusicPlayer];
 
-    MPMediaItem *nowPlayingItem = [iPodMusicPlayerController nowPlayingItem];
-
-    if(nowPlayingItem)
-    {
-        NSString *itemTitle = [nowPlayingItem valueForProperty:MPMediaItemPropertyTitle];
-        NSString *itemArtist = [nowPlayingItem valueForProperty:MPMediaItemPropertyArtist];
-
-        if (self.mainInfoService) {
-            [self sendValue:[NSString stringWithFormat:@"%@-%@",itemArtist,itemTitle]];
-        }
-    }else {
-        NSLog(@"User is not playing a song");
+    if (self.mainInfoService.characteristics) {
+        [self sendValue:[self currentTrack] forCharacteristic:self.songInfoCharacteristic];
+        [self sendValue:[self currentTrackID] forCharacteristic:self.songIDCharacteristic];
+        [self sendValue:[self phoneName] forCharacteristic:self.phoneInfoCharacteristic];
     }
-
-    NSLog(@"music note - %@",note.userInfo);
-
-
-    //  [self sendValue:@"test1"];
-    
 }
 
 #pragma mark - GATT Services
@@ -137,9 +128,14 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
 
     self.phoneInfoCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:PhoneNameCharacteristicID]
-                                                                      properties:CBCharacteristicPropertyRead
-                                                                           value:[[self phoneName] dataUsingEncoding:NSUTF8StringEncoding]
+                                                                      properties:CBCharacteristicPropertyNotify
+                                                                           value:nil
                                                                      permissions:CBAttributePermissionsReadable];
+
+    self.songIDCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:SongIDCharacteristicID]
+                                                                     properties:CBCharacteristicPropertyNotify
+                                                                          value:nil
+                                                                    permissions:CBAttributePermissionsReadable];
 
     self.songInfoCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:SongInfoCharacteristicID]
                                                                      properties:CBCharacteristicPropertyNotify
@@ -150,7 +146,7 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
     self.mainInfoService = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:SongInfoServiceID]
                                                           primary:YES];
 
-    self.mainInfoService.characteristics = @[self.songInfoCharacteristic,self.phoneInfoCharacteristic];
+    self.mainInfoService.characteristics = @[self.songInfoCharacteristic,self.phoneInfoCharacteristic,self.songIDCharacteristic];
 
     [self.peripheralManager addService:self.mainInfoService];
     
@@ -160,6 +156,10 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
 - (void)fetchNearbyDeviceDataWithCompletion:(SDWBTManagerCompletionBlock)block {
 
+}
+
+- (void)updateTrackToCurrent {
+    [self trackChange:nil];
 }
 
 
@@ -176,19 +176,16 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error {
 
     if (!error) {
-        [self sendValue:@"test"];
+        [self sendValue:@"test" forCharacteristic:self.songInfoCharacteristic];
     }
 }
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral {
 
     if (peripheral.state == CBPeripheralManagerStatePoweredOn) {
-        [self.peripheralManager startAdvertising:self.peripheralData];
-
+       // [self.peripheralManager startAdvertising:self.peripheralData];
 
         if (!self.peripheralManager.isAdvertising) {
-
-
             [self.peripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey : @[[CBUUID UUIDWithString:SongInfoServiceID]] }];
         }
 
@@ -265,7 +262,12 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
         NSLog(@"Service UUID - %@",service.UUID);
 
-        [self.discoveredDevice discoverCharacteristics:@[[CBUUID UUIDWithString:SongInfoCharacteristicID]] forService:service];
+        [self.discoveredDevice discoverCharacteristics:@[
+                                                         [CBUUID UUIDWithString:SongInfoCharacteristicID],
+                                                         [CBUUID UUIDWithString:PhoneNameCharacteristicID],
+                                                         [CBUUID UUIDWithString:SongIDCharacteristicID]
+                                                         ]
+                                            forService:service];
 
 
     }
@@ -294,8 +296,8 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
 
-//    NSString *printable = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
-//   // NSLog(@"CBCharacteristic value - %@", printable);
+    NSString *printable = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
+    NSLog(@"CBCharacteristic value - %@", printable);
 //    NSArray *filteredArr = [self.discoveredDevices allObjects];
 //    filteredArr = [filteredArr filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self == %@",peripheral]];
 
@@ -311,8 +313,29 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
         NSLog(@"Notification began on %@", characteristic);
     } else {
         // Notification has stopped
-        [self.centralManager cancelPeripheralConnection:peripheral];
+       // [self.centralManager cancelPeripheralConnection:peripheral];
     }
+}
+
+
+
+#pragma mark - CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+
+    NSLog(@"didEnterRegion");
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+
+    NSLog(@"didExitRegion");
+}
+
+- (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
+//    if ([beacons count] == 0)
+//        return;
+
+    NSLog(@"didRangeBeacons - %@",beacons);
+
 }
 
 
@@ -320,30 +343,114 @@ NSString * const beaconId = @"com.sdwr.found.beaconid";
 
 - (void)updateDeviceInfo {
 
-   // NSMutableArray *deviceInfoObjects = [[NSMutableArray alloc]initWithCapacity:self.discoveredDevices.count];
+    NSMutableArray *deviceInfoObjects = [[NSMutableArray alloc]initWithCapacity:self.discoveredDevices.count];
 
     for (CBPeripheral *per in self.discoveredDevices) {
+
+
+        SDWDeviceInfo *info = [SDWDeviceInfo new];
+
 
         for (CBService *ser in per.services) {
 
             for (CBCharacteristic *ch in ser.characteristics) {
 
-                NSString *printable = [[NSString alloc] initWithData:ch.value encoding:NSUTF8StringEncoding];
-                NSLog(@"characteristic - %@",printable);
+
+                //NSLog(@"ch.UUID.UUIDString - %@",ch.UUID.UUIDString);
+
+                if ([ch.UUID.UUIDString isEqualToString:SongIDCharacteristicID]) {
+                    NSString *sID = [[NSString alloc] initWithData:ch.value encoding:NSUTF8StringEncoding];
+                    info.songID = [NSNumber numberWithLongLong:[sID longLongValue]];
+                }
+
+                if ([ch.UUID.UUIDString isEqualToString:PhoneNameCharacteristicID]) {
+                    NSString *sID = [[NSString alloc] initWithData:ch.value encoding:NSUTF8StringEncoding];
+                    info.deviceName = sID;
+                }
+
+                if ([ch.UUID.UUIDString isEqualToString:SongInfoCharacteristicID]) {
+                    NSString *printable = [[NSString alloc] initWithData:ch.value encoding:NSUTF8StringEncoding];
+                    info.songInfo = printable;
+                }
+
+
             }
         }
+
+        [deviceInfoObjects addObject:info];
+    }
+
+    for (SDWDeviceInfo *info in deviceInfoObjects) {
+
+        NSLog(@"trackID - %@",info.songID);
+        NSLog(@"trackName - %@",info.songInfo);
+        NSLog(@"deviceName - %@",info.deviceName);
     }
 
 }
+- (void)sendValue:(id)value forCharacteristic:(CBMutableCharacteristic *)cr {
 
-- (void)sendValue:(NSString *)value {
-
-    NSData* data = [ value dataUsingEncoding:NSUTF8StringEncoding];
-    [self.peripheralManager updateValue:data forCharacteristic:self.songInfoCharacteristic onSubscribedCentrals:nil];
+    NSData* data = [value dataUsingEncoding:NSUTF8StringEncoding];
+    [self.peripheralManager updateValue:data forCharacteristic:cr onSubscribedCentrals:nil];
 }
 
 - (NSString *)phoneName {
     return [[UIDevice currentDevice] name];
+}
+
+- (void)playItemWithID:(NSNumber *)itemID {
+
+    //MPNowPlayingInfoPropertyElapsedPlaybackTime and MPMediaItemPropertyPlaybackDuration.
+
+    MPMediaPredicate *filter = [MPMediaPropertyPredicate predicateWithValue:itemID forProperty:MPMediaItemPropertyPersistentID];
+    MPMediaQuery *songQuery = [[MPMediaQuery alloc] initWithFilterPredicates:[NSSet setWithObject:filter]];
+    NSArray *songs = [songQuery items]; // [songs count] is zero here
+    NSLog(@"found songs - %@",songs);
+
+//    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+//    [everything addFilterPredicate:nil]
+//    NSArray *itemsFromGenericQuery = [everything items];
+//
+//    MPMusicPlayerController *iPodMusicPlayerController = [MPMusicPlayerController systemMusicPlayer];
+//
+//    MPMediaItemCollection *collection = [[MPMediaItemCollection alloc] initWithItems:@[item]];
+////    MPMediaItem *item = [collection representativeItem];
+//
+//
+//    [iPodMusicPlayerController setQueueWithItemCollection:collection];
+//    [iPodMusicPlayerController setNowPlayingItem:item];
+//
+//    [iPodMusicPlayerController prepareToPlay];
+//    [iPodMusicPlayerController play];
+}
+
+- (NSString *)currentTrackID {
+
+    MPMusicPlayerController *iPodMusicPlayerController = [MPMusicPlayerController systemMusicPlayer];
+    MPMediaItem *nowPlayingItem = [iPodMusicPlayerController nowPlayingItem];
+    NSNumber *tID = [nowPlayingItem valueForProperty:MPMediaItemPropertyPersistentID];
+    return [tID stringValue];
+}
+
+- (NSString *)currentTrack {
+
+    NSString *track;
+
+    MPMusicPlayerController *iPodMusicPlayerController = [MPMusicPlayerController systemMusicPlayer];
+
+    MPMediaItem *nowPlayingItem = [iPodMusicPlayerController nowPlayingItem];
+
+    if(nowPlayingItem)
+    {
+        NSString *itemTitle = [nowPlayingItem valueForProperty:MPMediaItemPropertyTitle];
+        NSString *itemArtist = [nowPlayingItem valueForProperty:MPMediaItemPropertyArtist];
+        track = [NSString stringWithFormat:@"%@-%@",itemArtist,itemTitle];
+
+    }else {
+        track = @"nothing";
+    }
+
+    return track;
 }
 
 
