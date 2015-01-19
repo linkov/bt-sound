@@ -15,6 +15,10 @@
 
 /* should be private for subclasses */
 
+- (NSArray *)publish;
+- (NSArray *)subscribe;
+
+
 - (void)setup;
 - (void)sendValue:(id)value forCharacteristic:(CBMutableCharacteristic *)cr;
 

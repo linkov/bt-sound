@@ -44,7 +44,16 @@
 
 #pragma mark - GATT Services
 
-- (void)setupServices {}
+- (void)setupServices {
+
+    self.mainInfoService.characteristics = [self publish];
+
+    [self.peripheralManager addService:self.mainInfoService];
+    
+}
+
+/* subclasses override */
+- (NSArray *)publish { return nil; }
 
 
 
@@ -60,7 +69,21 @@
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error {}
 
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral {}
+
+- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral {
+
+    if (peripheral.state == CBPeripheralManagerStatePoweredOn) {
+        // [self.peripheralManager startAdvertising:self.peripheralData];
+
+        if (!self.peripheralManager.isAdvertising) {
+            [self.peripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey : @[self.mainInfoService.UUID] }];
+        }
+
+    } else if (peripheral.state == CBPeripheralManagerStatePoweredOff) {
+        [self.peripheralManager stopAdvertising];
+    }
+}
+
 
 #pragma mark - CBCentralManagerDelegate
 
@@ -71,7 +94,16 @@
 }
 
 
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {}
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
+
+    // self.btDevice = peripheral;
+    self.discoveredDevice.delegate = self;
+    [self.discoveredDevice discoverServices:@[self.mainInfoService.UUID]];
+    [self.centralManager stopScan];
+
+
+}
+
 
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
 
@@ -100,7 +132,22 @@
 
 #pragma mark - CBPeripheralDelegate
 
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {}
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
+
+    for (CBService *service in peripheral.services) {
+
+        NSLog(@"Service UUID - %@",service.UUID);
+
+        [self.discoveredDevice discoverCharacteristics:[self subscribe]
+                                            forService:service];
+
+
+    }
+    
+}
+
+- (NSArray *)subscribe { return nil; }
+
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
 
@@ -125,11 +172,11 @@
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
 
     [self.discoveredDevices addObject:peripheral];
-    [self updateDeviceInfo];
+    [self didUpdateCharacteristicValue];
 
 }
 
-- (void)updateDeviceInfo {}
+- (void)didUpdateCharacteristicValue {}
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
 

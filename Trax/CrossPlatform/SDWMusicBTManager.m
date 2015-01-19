@@ -64,13 +64,12 @@ NSString * const SongElapsedTimeCharacteristicID = @"7E52";
 
     [super setup];
 
-
     self.musicManager = [SDWMusicManager new];
     self.musicManager.delegate = self;
 
 }
 
-- (void)setupServices {
+- (NSArray *)publish {
 
     self.songElapsedTimeCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:SongElapsedTimeCharacteristicID]
                                                                             properties:CBCharacteristicPropertyNotify
@@ -93,65 +92,26 @@ NSString * const SongElapsedTimeCharacteristicID = @"7E52";
                                                                     permissions:CBAttributePermissionsReadable];
 
 
-    self.mainInfoService = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:SongInfoServiceID]
-                                                          primary:YES];
-
-    self.mainInfoService.characteristics = @[self.songInfoCharacteristic,self.phoneInfoCharacteristic,self.songIDCharacteristic,self.songElapsedTimeCharacteristic];
-
-    [self.peripheralManager addService:self.mainInfoService];
-    
+    return @[self.songInfoCharacteristic,self.phoneInfoCharacteristic,self.songIDCharacteristic,self.songElapsedTimeCharacteristic];
 }
 
 
-#pragma mark - Negotiate connection
+- (NSArray *)subscribe {
 
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral {
-
-    if (peripheral.state == CBPeripheralManagerStatePoweredOn) {
-        // [self.peripheralManager startAdvertising:self.peripheralData];
-
-        if (!self.peripheralManager.isAdvertising) {
-            [self.peripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey : @[[CBUUID UUIDWithString:SongInfoServiceID]] }];
-        }
-
-    } else if (peripheral.state == CBPeripheralManagerStatePoweredOff) {
-        [self.peripheralManager stopAdvertising];
-    }
-}
-
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-
-    // self.btDevice = peripheral;
-    self.discoveredDevice.delegate = self;
-    [self.discoveredDevice discoverServices:@[[CBUUID UUIDWithString:SongInfoServiceID]]];
-    [self.centralManager stopScan];
-    
-    
+    return @[
+             self.songInfoCharacteristic.UUID,
+             self.phoneInfoCharacteristic.UUID,
+             self.songIDCharacteristic.UUID,
+             self.songElapsedTimeCharacteristic.UUID
+             ];
 }
 
 
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
 
-    for (CBService *service in peripheral.services) {
-
-        NSLog(@"Service UUID - %@",service.UUID);
-
-        [self.discoveredDevice discoverCharacteristics:@[
-                                                         [CBUUID UUIDWithString:SongInfoCharacteristicID],
-                                                         [CBUUID UUIDWithString:PhoneNameCharacteristicID],
-                                                         [CBUUID UUIDWithString:SongIDCharacteristicID],
-                                                         [CBUUID UUIDWithString:SongElapsedTimeCharacteristicID]
-                                                         ]
-                                            forService:service];
-        
-        
-    }
-    
-}
 
 #pragma mark - Parse data
 
-- (void)updateDeviceInfo {
+- (void)didUpdateCharacteristicValue {
 
     NSMutableArray *deviceInfoObjects = [[NSMutableArray alloc]initWithCapacity:self.discoveredDevices.count];
 
