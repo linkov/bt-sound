@@ -9,19 +9,10 @@
 #import "SDWBTManager.h"
 #import "SDWDeviceInfo.h"
 
-@protocol SDWMusicBTManagerDelegate
 
-@optional
-
-- (void)managerDidPopulateData:(NSArray *)data;
-
-
-@end
 
 
 @interface SDWMusicBTManager : SDWBTManager
-
-@property (weak) id<SDWMusicBTManagerDelegate> delegate;
 
 - (void)syncCurrentTrackWithDeviceInfo:(SDWDeviceInfo *)deviceInfo;
 - (void)updateTrackToCurrent;

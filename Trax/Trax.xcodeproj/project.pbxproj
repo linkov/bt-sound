@@ -14,7 +14,6 @@
 		F1ECEF851A6AED5100AF7DA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEF831A6AED5100AF7DA2 /* Main.storyboard */; };
 		F1ECEF871A6AED5100AF7DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEF861A6AED5100AF7DA2 /* Images.xcassets */; };
 		F1ECEF8A1A6AED5100AF7DA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEF881A6AED5100AF7DA2 /* LaunchScreen.xib */; };
-		F1ECEFA41A6BC46000AF7DA2 /* SDWDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFA31A6BC46000AF7DA2 /* SDWDeviceInfo.m */; };
 		F1ECEFA71A6C31B700AF7DA2 /* SDWMusicManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFA61A6C31B700AF7DA2 /* SDWMusicManager.m */; };
 		F1ECEFAA1A6C341600AF7DA2 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFA91A6C341600AF7DA2 /* Utils.m */; };
 		F1ECEFB51A6C351B00AF7DA2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFB41A6C351B00AF7DA2 /* AppDelegate.m */; };
@@ -24,8 +23,10 @@
 		F1ECEFBF1A6C351B00AF7DA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ECEFBD1A6C351B00AF7DA2 /* Main.storyboard */; };
 		F1ECEFD51A6C358B00AF7DA2 /* SDWBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */; };
 		F1ECEFD61A6C358B00AF7DA2 /* SDWBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */; };
-		F1ECEFD91A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */; };
-		F1ECEFDA1A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */; };
+		F1ECEFDE1A6D65D000AF7DA2 /* SDWMusicBTManagerMac.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFDC1A6D65D000AF7DA2 /* SDWMusicBTManagerMac.m */; };
+		F1ECEFE11A6D807700AF7DA2 /* SDWDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFE01A6D807700AF7DA2 /* SDWDeviceInfo.m */; };
+		F1ECEFE21A6D807700AF7DA2 /* SDWDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFE01A6D807700AF7DA2 /* SDWDeviceInfo.m */; };
+		F1ECEFE61A6D810000AF7DA2 /* SDWMusicBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F1ECEFE51A6D810000AF7DA2 /* SDWMusicBTManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +42,6 @@
 		F1ECEF841A6AED5100AF7DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F1ECEF861A6AED5100AF7DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F1ECEF891A6AED5100AF7DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F1ECEFA21A6BC46000AF7DA2 /* SDWDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWDeviceInfo.h; sourceTree = "<group>"; };
-		F1ECEFA31A6BC46000AF7DA2 /* SDWDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWDeviceInfo.m; sourceTree = "<group>"; };
 		F1ECEFA51A6C31B700AF7DA2 /* SDWMusicManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWMusicManager.h; sourceTree = "<group>"; };
 		F1ECEFA61A6C31B700AF7DA2 /* SDWMusicManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWMusicManager.m; sourceTree = "<group>"; };
 		F1ECEFA81A6C341600AF7DA2 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
@@ -58,8 +57,12 @@
 		F1ECEFBE1A6C351B00AF7DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F1ECEFD31A6C358B00AF7DA2 /* SDWBTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWBTManager.h; sourceTree = "<group>"; };
 		F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWBTManager.m; sourceTree = "<group>"; };
-		F1ECEFD71A6C383000AF7DA2 /* SDWMusicBTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWMusicBTManager.h; sourceTree = "<group>"; };
-		F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWMusicBTManager.m; sourceTree = "<group>"; };
+		F1ECEFDB1A6D65D000AF7DA2 /* SDWMusicBTManagerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWMusicBTManagerMac.h; sourceTree = "<group>"; };
+		F1ECEFDC1A6D65D000AF7DA2 /* SDWMusicBTManagerMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWMusicBTManagerMac.m; sourceTree = "<group>"; };
+		F1ECEFDF1A6D807700AF7DA2 /* SDWDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWDeviceInfo.h; sourceTree = "<group>"; };
+		F1ECEFE01A6D807700AF7DA2 /* SDWDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWDeviceInfo.m; sourceTree = "<group>"; };
+		F1ECEFE41A6D810000AF7DA2 /* SDWMusicBTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWMusicBTManager.h; sourceTree = "<group>"; };
+		F1ECEFE51A6D810000AF7DA2 /* SDWMusicBTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWMusicBTManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,8 @@
 		F1ECEF751A6AED5100AF7DA2 /* Trax */ = {
 			isa = PBXGroup;
 			children = (
+				F1ECEFE41A6D810000AF7DA2 /* SDWMusicBTManager.h */,
+				F1ECEFE51A6D810000AF7DA2 /* SDWMusicBTManager.m */,
 				F1ECEF7A1A6AED5100AF7DA2 /* AppDelegate.h */,
 				F1ECEF7B1A6AED5100AF7DA2 /* AppDelegate.m */,
 				F1ECEF7D1A6AED5100AF7DA2 /* MasterViewController.h */,
@@ -112,8 +117,6 @@
 				F1ECEFA61A6C31B700AF7DA2 /* SDWMusicManager.m */,
 				F1ECEFA81A6C341600AF7DA2 /* Utils.h */,
 				F1ECEFA91A6C341600AF7DA2 /* Utils.m */,
-				F1ECEFA21A6BC46000AF7DA2 /* SDWDeviceInfo.h */,
-				F1ECEFA31A6BC46000AF7DA2 /* SDWDeviceInfo.m */,
 				F1ECEF831A6AED5100AF7DA2 /* Main.storyboard */,
 				F1ECEF861A6AED5100AF7DA2 /* Images.xcassets */,
 				F1ECEF881A6AED5100AF7DA2 /* LaunchScreen.xib */,
@@ -138,6 +141,8 @@
 				F1ECEFB41A6C351B00AF7DA2 /* AppDelegate.m */,
 				F1ECEFB81A6C351B00AF7DA2 /* ViewController.h */,
 				F1ECEFB91A6C351B00AF7DA2 /* ViewController.m */,
+				F1ECEFDB1A6D65D000AF7DA2 /* SDWMusicBTManagerMac.h */,
+				F1ECEFDC1A6D65D000AF7DA2 /* SDWMusicBTManagerMac.m */,
 				F1ECEFBB1A6C351B00AF7DA2 /* Images.xcassets */,
 				F1ECEFBD1A6C351B00AF7DA2 /* Main.storyboard */,
 				F1ECEFB11A6C351B00AF7DA2 /* Supporting Files */,
@@ -157,10 +162,10 @@
 		F1ECEFD21A6C358B00AF7DA2 /* CrossPlatform */ = {
 			isa = PBXGroup;
 			children = (
+				F1ECEFDF1A6D807700AF7DA2 /* SDWDeviceInfo.h */,
+				F1ECEFE01A6D807700AF7DA2 /* SDWDeviceInfo.m */,
 				F1ECEFD31A6C358B00AF7DA2 /* SDWBTManager.h */,
 				F1ECEFD41A6C358B00AF7DA2 /* SDWBTManager.m */,
-				F1ECEFD71A6C383000AF7DA2 /* SDWMusicBTManager.h */,
-				F1ECEFD81A6C383000AF7DA2 /* SDWMusicBTManager.m */,
 			);
 			path = CrossPlatform;
 			sourceTree = "<group>";
@@ -269,12 +274,12 @@
 				F1ECEFD51A6C358B00AF7DA2 /* SDWBTManager.m in Sources */,
 				F1ECEF7C1A6AED5100AF7DA2 /* AppDelegate.m in Sources */,
 				F1ECEF7F1A6AED5100AF7DA2 /* MasterViewController.m in Sources */,
-				F1ECEFA41A6BC46000AF7DA2 /* SDWDeviceInfo.m in Sources */,
 				F1ECEFAA1A6C341600AF7DA2 /* Utils.m in Sources */,
 				F1ECEF791A6AED5100AF7DA2 /* main.m in Sources */,
 				F1ECEF821A6AED5100AF7DA2 /* DetailViewController.m in Sources */,
 				F1ECEFA71A6C31B700AF7DA2 /* SDWMusicManager.m in Sources */,
-				F1ECEFD91A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */,
+				F1ECEFE11A6D807700AF7DA2 /* SDWDeviceInfo.m in Sources */,
+				F1ECEFE61A6D810000AF7DA2 /* SDWMusicBTManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,11 +287,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1ECEFDA1A6C383000AF7DA2 /* SDWMusicBTManager.m in Sources */,
+				F1ECEFDE1A6D65D000AF7DA2 /* SDWMusicBTManagerMac.m in Sources */,
 				F1ECEFD61A6C358B00AF7DA2 /* SDWBTManager.m in Sources */,
 				F1ECEFBA1A6C351B00AF7DA2 /* ViewController.m in Sources */,
 				F1ECEFB71A6C351B00AF7DA2 /* main.m in Sources */,
 				F1ECEFB51A6C351B00AF7DA2 /* AppDelegate.m in Sources */,
+				F1ECEFE21A6D807700AF7DA2 /* SDWDeviceInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

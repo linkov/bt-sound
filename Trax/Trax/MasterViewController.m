@@ -10,7 +10,7 @@
 #import "DetailViewController.h"
 #import "SDWDeviceInfo.h"
 
-@interface MasterViewController () <SDWMusicBTManagerDelegate>
+@interface MasterViewController () <SDWBTManagerDelegate>
 
 @property NSArray *objects;
 @property SDWMusicBTManager *btManager;

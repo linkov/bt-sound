@@ -10,13 +10,13 @@
 #import "SDWMusicManager.h"
 #import "Utils.h"
 
-NSString * const SongInfoServiceID = @"7E57";
+
 NSString * const SongIDCharacteristicID = @"7E56";
 NSString * const SongInfoCharacteristicID = @"7E55";
 NSString * const PhoneNameCharacteristicID = @"7E53";
 NSString * const SongElapsedTimeCharacteristicID = @"7E52";
 
-@interface SDWMusicBTManager () <SDWMusicManagerDelegate,CBPeripheralManagerDelegate, CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface SDWMusicBTManager () <SDWMusicManagerDelegate>
 
 @property SDWMusicManager *musicManager;
 

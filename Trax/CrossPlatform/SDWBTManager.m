@@ -5,12 +5,13 @@
 //  Created by alex on 1/17/15.
 //  Copyright (c) 2015 SDWR. All rights reserved.
 //
-@import CoreBluetooth;
-//@import MediaPlayer;
+
 
 
 #import "SDWBTManager.h"
 #import "SDWMusicManager.h"
+
+NSString * const SongInfoServiceID = @"7E57";
 
 @interface SDWBTManager () <CBPeripheralManagerDelegate, CBCentralManagerDelegate, CBPeripheralDelegate>
 
@@ -39,12 +40,17 @@
 
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:queue];
+
 }
 
 
 #pragma mark - GATT Services
 
 - (void)setupServices {
+
+    self.mainInfoService = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:SongInfoServiceID]
+                                                          primary:YES];
+
 
     self.mainInfoService.characteristics = [self publish];
 
@@ -59,14 +65,7 @@
 
 #pragma mark - CBPeripheralManagerDelegate
 
-- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error {
-
-    if (!self.mainInfoService) {
-        [self setupServices];
-    }
-}
-
-
+- (void)peripheralManagerDidStartAdvertising:(CBPeripheralManager *)peripheral error:(NSError *)error {}
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didAddService:(CBService *)service error:(NSError *)error {}
 
 
@@ -75,8 +74,12 @@
     if (peripheral.state == CBPeripheralManagerStatePoweredOn) {
         // [self.peripheralManager startAdvertising:self.peripheralData];
 
+        if (!self.mainInfoService) {
+            [self setupServices];
+        }
+
         if (!self.peripheralManager.isAdvertising) {
-            [self.peripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey : @[self.mainInfoService.UUID] }];
+            [self.peripheralManager startAdvertising:@{ CBAdvertisementDataServiceUUIDsKey : @[ [CBUUID UUIDWithString:SongInfoServiceID] ] }];
         }
 
     } else if (peripheral.state == CBPeripheralManagerStatePoweredOff) {
@@ -96,10 +99,12 @@
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
 
+    NSLog(@"didConnectPeripheral");
+    [self.centralManager stopScan];
     // self.btDevice = peripheral;
     self.discoveredDevice.delegate = self;
-    [self.discoveredDevice discoverServices:@[self.mainInfoService.UUID]];
-    [self.centralManager stopScan];
+    [self.discoveredDevice discoverServices:nil];
+
 
 
 }
@@ -109,6 +114,8 @@
 
 }
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+
+    NSLog(@"centralManagerDidUpdateState");
 
     switch (central.state) {
         case CBCentralManagerStatePoweredOn:
@@ -123,14 +130,15 @@
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
 
-    NSLog(@"didDisconnectPeripheral");
+    NSLog(@"didDisconnectPeripheral, error - %@",error);
+    self.discoveredDevice.delegate = nil;
     self.discoveredDevice = nil;
-    [self.centralManager scanForPeripheralsWithServices:nil options: @{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO}];
+ //   [self.centralManager scanForPeripheralsWithServices:nil options: @{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO}];
 }
 
 
 
-#pragma mark - CBPeripheralDelegate
+#pragma mark - CBPeripheralDelegate]
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
 
@@ -138,8 +146,11 @@
 
         NSLog(@"Service UUID - %@",service.UUID);
 
-        [self.discoveredDevice discoverCharacteristics:[self subscribe]
-                                            forService:service];
+        if ([service.UUID.UUIDString isEqualToString:SongInfoServiceID]) {
+
+            [self.discoveredDevice discoverCharacteristics:[self subscribe]
+                                                forService:service];
+        }
 
 
     }
